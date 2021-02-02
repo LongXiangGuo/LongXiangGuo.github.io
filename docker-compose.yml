@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  site:
+    build: .
+    volumes:
+      - .:/mobile20
+    ports:
+      - "4000:4000"

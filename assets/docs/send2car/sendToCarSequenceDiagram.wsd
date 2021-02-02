@@ -1,0 +1,32 @@
+@startuml Send To Car Serice
+ConnectedApp -> DestinationComposite: Searched Location
+DestinationComposite --> SendToCarService: Searched Location
+
+SendToCarService -> VehicleService: GET Vehicle information
+VehicleService -> SendToCarService: Vehicle information
+
+alt car has a legacy head unit or fill location data is true
+    SendToCarService -> LOS: GET location information
+    LOS -> SendToCarService: Location information
+    SendToCarService -> SendToCarService: Complete location missing data
+end
+
+SendToCarService -> TripService: GET trips for the user
+TripService -> SendToCarService: Trips
+
+SendToCarService -> TripService: CREATE Trip location
+TripService -> SendToCarService: Trip location
+
+SendToCarService -> TripService: CREATE Trip
+TripService -> SendToCarService: Trip
+
+SendToCarService -> TripService: DELETE outdated trips
+
+alt car has a legacy head unit
+    SendToCarService -> MessageService: Trip information
+end
+
+SendToCarService -> DestinationComposite: Trip
+DestinationComposite -> ConnectedApp: Success / Insuccess
+
+@enduml

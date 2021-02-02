@@ -1,0 +1,20 @@
+@startuml "execute_quick_remote"
+QuickRemote -> QuickRemoteBloc: QuickRemoteExecutedEvent
+QuickRemoteBloc -> QuickRemoteSyncBloc: QuickRemoteSyncExecuted(quickRemoteType, remoteServiceAction) (*1)
+QuickRemoteSyncBloc -> QuickRemoteBloc: yield QuickRemoteSyncExecutionInProgress(quickRemoteType)
+QuickRemoteBloc -> QuickRemoteBloc: QuickRemoteExecutionInProgressEvent
+
+QuickRemoteBloc -> QuickRemote: yield QuickRemoteExecutionInProgress (*3)
+note left: loading animation (*2)
+QuickRemoteSyncBloc-> QuickRemoteRepository: execute command
+
+QuickRemoteRepository-> QuickRemoteRepository: Poling request while \n comand is not executed
+
+QuickRemoteRepository -> QuickRemoteSyncBloc
+QuickRemoteSyncBloc -> QuickRemoteBloc: yield QuickRemoteSyncExecutionSuccess(quickRemoteType)
+QuickRemoteBloc -> QuickRemoteBloc: QuickRemoteExecutionSuccessEvent
+
+QuickRemoteBloc -> QuickRemote: yield Main State (*5)
+note left: main state (*4)
+QuickRemoteSyncBloc -> VehiclesBloc: VehicleUpdated
+@enduml

@@ -1,0 +1,10 @@
+@startuml "update_quick_remote"
+
+
+VehiclesBloc -> QuickRemoteSyncBloc: vehicle Update
+QuickRemoteSyncBloc -> QuickRemoteSyncBloc: QuickRemoteRunningTimeUpdated(quickRemoteType=climatizeNow, quickRemoteEndTime)
+QuickRemoteSyncBloc -> QuickRemoteBloc: yield QuickRemoteSyncRunningTimeUpdateSuccess(quickRemoteType,quickRemoteEndTime)
+QuickRemoteBloc -> QuickRemoteBloc: QuickRemoteRunningTimeUpdatedEvent(quickRemoteEndTime)
+
+QuickRemoteBloc -> QuickRemoteBloc: Timer update logic (*1)
+@enduml

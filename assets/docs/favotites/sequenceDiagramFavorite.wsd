@@ -1,0 +1,24 @@
+@startuml Favorite Sequence Diagram
+alt Add Favorite
+    ConnectedApp -> DestinationComposite: Favorite a destination
+    DestinationComposite -> PDS: SEND favorite destination
+    PDS -> PERSEUS: GET list of favorites and Etag
+    PDS -> PDS: ADD the favorite to the list
+    PDS -> PERSEUS: SEND the list of favorites and Etag
+end
+alt Delete Favorite
+    ConnectedApp -> DestinationComposite: DELETE Favorite
+    DestinationComposite -> PDS: SEND favorite ID
+    PDS -> PERSEUS: GET list of favorites and Etag
+    PDS -> PDS: REMOVE favorite from list
+    PDS -> PERSEUS: SEND the list of favorites and Etag
+end
+alt Edit a Favorite
+    ConnectedApp -> DestinationComposite: Edit favorite a destination
+    DestinationComposite -> PDS: SEND favorite destination
+    PDS -> PERSEUS: GET list of favorites and Etag
+    PDS -> PDS: UPDATE the favorite to the list
+    PDS -> PERSEUS: SEND the list of favorites and Etag
+end
+
+@enduml

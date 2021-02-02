@@ -1,0 +1,32 @@
+@startuml "quick_remote_climate_now"
+
+!pragma teoz true
+
+
+== Start ==
+QuickRemoteButtonIdle -> ConfirmationPopUp: press quick-remote climatize
+ConfirmationPopUp -> QuickRemoteButtonLoading: confirm start execution 
+
+QuickRemoteButtonLoading -> UpdateVehicle: request update
+QuickRemoteButtonLoading --> QuickRemoteButtonIdle: remote execution confirmed
+UpdateVehicle -> QuickRemoteButtonIdle: climatization started in vehicle confirmed
+ QuickRemoteButtonRunning <- QuickRemoteButtonIdle
+
+== Stop by timer ==
+QuickRemoteButtonRunning  <-  UpdateVehicle : climatization stopped in vehicle
+ QuickRemoteButtonRunning->QuickRemoteButtonIdle
+
+== Stop by user ==
+
+QuickRemoteButtonRunning -> ConfirmationPopUp: press quick-remote climatize
+ConfirmationPopUp -> QuickRemoteButtonLoading: confirm stop execution 
+
+QuickRemoteButtonLoading -> UpdateVehicle: request update
+QuickRemoteButtonLoading --> QuickRemoteButtonRunning: remote execution confirmed
+UpdateVehicle -> QuickRemoteButtonRunning: climatization stopped in vehicle confirmed
+QuickRemoteButtonIdle<-QuickRemoteButtonRunning
+UpdateVehicle -> QuickRemoteButtonIdle: climatization started in vehicle confirmed
+QuickRemoteButtonIdle->QuickRemoteButtonRunning
+
+@enduml
+

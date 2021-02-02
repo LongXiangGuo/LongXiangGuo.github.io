@@ -1,0 +1,9 @@
+@startuml "quick_remote_unlock"
+QuickRemoteButtonIdle -> ConfirmationPopUp: press quick-remote lock
+ConfirmationPopUp -> PinConfirmation: confirm execution 
+PinConfirmation -> QuickRemoteButtonLoading: insert pin
+
+QuickRemoteButtonLoading -> UpdateVehicle: request update
+QuickRemoteButtonLoading --> QuickRemoteButtonIdle: remote execution confirmed
+UpdateVehicle -> QuickRemoteButtonIdle:  unlocked vehicle confirmed
+@enduml

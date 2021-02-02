@@ -1,0 +1,422 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "BMW OMC FTS feature-toggles-service API",
+      "description": "",
+      "termsOfService": "http://bmwusa.com",
+      "contact": {
+        "name": "BMW Tech",
+        "url": "https://code.connected.bmw/mobile20/feature-toggles-service",
+        "email": "apis@bmw.com"
+      },
+      "version": "1.0"
+    },
+    "paths": {
+      "/api/v1/flags": {
+        "get": {
+          "tags": [
+            "Flags"
+          ],
+          "summary": "Get the list of flags that can be filtered by the isActive query parameter",
+          "description": "Get the feature toggle flags",
+          "parameters": [
+            {
+              "name": "BMW-Correlation-ID",
+              "in": "header",
+              "description": "A Correlation ID, also known as a Transit ID, is a unique identifier value that is attached\r\nto requests and messages that allow reference to a particular transaction or event chain.",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "BMW-usid",
+              "in": "header",
+              "description": "BMW User Identifier",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "description": "Phone settings accept language",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "x-user-agent",
+              "in": "header",
+              "description": "Context metadata that contains brand, operation system, operation system version, app version and app build number",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "isActive",
+              "in": "query",
+              "description": "Query parameter that allows to filter active and inactive flags",
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FeatureTogglesDto"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FeatureTogglesDto"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FeatureTogglesDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/flags/{flag-id}": {
+        "get": {
+          "tags": [
+            "Flags"
+          ],
+          "summary": "Get one specific flag filtered by the flag identification",
+          "description": "Get the Flag",
+          "parameters": [
+            {
+              "name": "flag-id",
+              "in": "path",
+              "description": "Flag identification number",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "BMW-Correlation-ID",
+              "in": "header",
+              "description": "A Correlation ID, also known as a Transit ID, is a unique identifier value that is attached\r\nto requests and messages that allow reference to a particular transaction or event chain.",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "BMW-usid",
+              "in": "header",
+              "description": "BMW User Identifier",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Accept-Language",
+              "in": "header",
+              "description": "Phone settings accept language",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "x-user-agent",
+              "in": "header",
+              "description": "Context metadata that contains brand, operation system, operation system version, app version and app build number",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FlagDto"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FlagDto"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FlagDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenericErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "FlagDto": {
+          "type": "object",
+          "properties": {
+            "flagId": {
+              "type": "string",
+              "nullable": true
+            },
+            "isActive": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "FeatureTogglesDto": {
+          "type": "object",
+          "properties": {
+            "flags": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FlagDto"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "RequestParameterError": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "BadRequestResponse": {
+          "type": "object",
+          "properties": {
+            "parameterErrors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RequestParameterError"
+              },
+              "nullable": true
+            },
+            "statusCode": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "logTransactionId": {
+              "type": "string",
+              "nullable": true
+            },
+            "requestTimestamp": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProblemDetails": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "nullable": true
+            },
+            "title": {
+              "type": "string",
+              "nullable": true
+            },
+            "status": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "detail": {
+              "type": "string",
+              "nullable": true
+            },
+            "instance": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "GenericErrorResponse": {
+          "type": "object",
+          "properties": {
+            "logErrorId": {
+              "type": "string",
+              "nullable": true
+            },
+            "logMessage": {
+              "type": "string",
+              "nullable": true
+            },
+            "requestUrl": {
+              "type": "string",
+              "nullable": true
+            },
+            "statusCode": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "logTransactionId": {
+              "type": "string",
+              "nullable": true
+            },
+            "requestTimestamp": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
